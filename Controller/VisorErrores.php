@@ -45,22 +45,18 @@ class VisorErrores extends Controller
 
         $this->datosArchivos = [];
         foreach ($pathsArchivos as $pathArchivo) {
-            // obtenemos la fecha de creación y modificación del archivo
-            $fechaCreacion = date('Y-m-d H:i:s', filectime($pathArchivo));
-            $fechaModificacion = date('Y-m-d H:i:s', filemtime($pathArchivo));
             $datos = json_decode(file_get_contents($pathArchivo), true);
             $this->datosArchivos[] = [
-                'fecha_creacion' => $fechaCreacion,
-                'fecha_modificacion' => $fechaModificacion,
+                'fecha' => date('Y-m-d H:i:s', filectime($pathArchivo)),
                 'hash' => $datos['hash'] ?? '',
                 'archivo' => basename($pathArchivo),
                 'datos' => $datos
             ];
         }
 
-        // ordenar por fecha de creación (más recientes primero)
+        // ordenar por fecha (más recientes primero)
         usort($this->datosArchivos, function ($a, $b) {
-            return strtotime($b['fecha_creacion']) - strtotime($a['fecha_creacion']);
+            return strtotime($b['fecha']) - strtotime($a['fecha']);
         });
 
         $this->kernelVersion2024 = strpos(Kernel::version(), '2024') !== false;

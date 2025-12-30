@@ -24,7 +24,7 @@
                             🚨 {{ datos.hash }}
                         </a>
                         <div>
-                            <span class="me-3">{{ datos.fecha_creacion }}</span>
+                            <span class="me-3">{{ datos.fecha }}</span>
                             <a href="?action=delete&hash={{ datos.hash }}" class="btn btn-sm btn-outline-danger"
                                onclick="return confirm('¿Está seguro de eliminar este error?');">
                                 <i class="fa-solid fa-trash-alt"></i>
@@ -32,10 +32,24 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <div class="mb-2">
-                            <small class="text-muted">Última modificación: {{ datos.fecha_modificacion }}</small>
+                        <div class="mb-3">
+                            <strong>Mensaje:</strong><br>
+                            {{ datos.datos.message|raw|nl2br }}
                         </div>
-                        {{ datos.datos.message|raw|nl2br }}
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <strong>Archivo:</strong> {{ datos.datos.file }}
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <strong>Línea:</strong> {{ datos.datos.line }}
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <strong>URL:</strong> {{ datos.datos.url }}
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <strong>IP:</strong> {{ datos.datos.ip }}
+                            </div>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
