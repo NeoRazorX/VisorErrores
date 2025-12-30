@@ -47,7 +47,7 @@ class VisorErrores extends Controller
         foreach ($pathsArchivos as $pathArchivo) {
             $datos = json_decode(file_get_contents($pathArchivo), true);
             $this->datosArchivos[] = [
-                'fecha' => date('Y-m-d H:i:s', filectime($pathArchivo)),
+                'fecha' => $datos['created_at'] ?? date('Y-m-d H:i:s', filemtime($pathArchivo)),
                 'hash' => $datos['hash'] ?? '',
                 'archivo' => basename($pathArchivo),
                 'datos' => $datos
